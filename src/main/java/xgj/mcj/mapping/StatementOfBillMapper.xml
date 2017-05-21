@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xgj.mcj.dao.StatementOfBillMapper">
+	<resultMap id="BaseResultMap" type="xgj.mcj.entity.StatementOfBill">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="userid" property="userid" jdbcType="INTEGER" />
+		<result column="shouru" property="shouru" jdbcType="DOUBLE" />
+		<result column="zhichu" property="zhichu" jdbcType="DOUBLE" />
+		<result column="yue" property="yue" jdbcType="DOUBLE" />
+		<result column="zhichuzong" property="zhichuzong" jdbcType="DOUBLE" />
+		<result column="shouruzong" property="shouruzong" jdbcType="DOUBLE" />
+		<result column="neirong" property="neirong" jdbcType="VARCHAR" />
+		<result column="yusuan" property="yusuan" jdbcType="DOUBLE" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, userid, shouru, zhichu, yue, zhichuzong, shouruzong, neirong, yusuan,startTime,endTime
+	</sql>
+	<sql id="sql_count">
+		SELECT COUNT(*)
+	</sql>
+	<sql id="sql_select">
+		SELECT *
+	</sql>
+	<sql id="sql_where">
+		FROM statementofbill
+	</sql>
+	<select id="all" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select * from statementofbill
+	</select>
+
+	<select id="selectPage" parameterType="xgj.mcj.entity.PageModel" resultType="xgj.mcj.entity.StatementOfBill">
+		<include refid="sql_select"></include>
+		<include refid="sql_where"></include>
+		<if test="pageNumber != null and  pageSize!= null">
+			limit #{startRow},#{pageSize}
+		</if>
+	</select>
+	 <select id="selectCount" parameterType="xgj.mcj.entity.PageModel" resultType="Integer">
+        <include refid="sql_count"></include>
+        <include refid="sql_where"></include>
+    </select>
+
+	<delete id="del" parameterType="java.lang.Integer">
+		delete from statementofbill
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="add" parameterType="xgj.mcj.entity.StatementOfBill">
+		insert into statementofbill (userid, shouru,
+		zhichu, yue, zhichuzong,
+		shouruzong, neirong, yusuan
+		)
+		values (#{userid,jdbcType=INTEGER},
+		#{shouru,jdbcType=DOUBLE},
+		#{zhichu,jdbcType=DOUBLE}, #{yue,jdbcType=DOUBLE}, #{zhichuzong,jdbcType=DOUBLE},
+		#{shouruzong,jdbcType=DOUBLE}, #{neirong,jdbcType=VARCHAR},
+		#{yusuan,jdbcType=DOUBLE}
+		)
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="xgj.mcj.entity.StatementOfBill">
+		update statementofbill
+		<set>
+			<if test="userid != null">
+				userid = #{userid,jdbcType=INTEGER},
+			</if>
+			<if test="shouru != null">
+				shouru = #{shouru,jdbcType=DOUBLE},
+			</if>
+			<if test="zhichu != null">
+				zhichu = #{zhichu,jdbcType=DOUBLE},
+			</if>
+			<if test="yue != null">
+				yue = #{yue,jdbcType=DOUBLE},
+			</if>
+			<if test="zhichuzong != null">
+				zhichuzong = #{zhichuzong,jdbcType=DOUBLE},
+			</if>
+			<if test="shouruzong != null">
+				shouruzong = #{shouruzong,jdbcType=DOUBLE},
+			</if>
+			<if test="neirong != null">
+				neirong = #{neirong,jdbcType=VARCHAR},
+			</if>
+			<if test="yusuan != null">
+				yusuan = #{yusuan,jdbcType=DOUBLE},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="xgj.mcj.entity.StatementOfBill">
+		update statementofbill
+		set userid = #{userid,jdbcType=INTEGER},
+		shouru = #{shouru,jdbcType=DOUBLE},
+		zhichu = #{zhichu,jdbcType=DOUBLE},
+		yue = #{yue,jdbcType=DOUBLE},
+		zhichuzong = #{zhichuzong,jdbcType=DOUBLE},
+		shouruzong = #{shouruzong,jdbcType=DOUBLE},
+		neirong = #{neirong,jdbcType=VARCHAR},
+		yusuan = #{yusuan,jdbcType=DOUBLE}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

@@ -1,0 +1,82 @@
+<meta charset="utf-8">
+<script type="text/javascript"
+	src="../js/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js"
+	charset="utf-8"></script>
+<script type="text/javascript"
+	src="../js/jquery-easyui-1.5.2/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+
+		$('#submit').click(function() {
+			var shouru = $('#shouru').val();
+			var zhichu = $('#zhichu').val();
+			if (shouru == '') {
+				alert('收入如果不填写会默认为 0');
+				$('#shouru').val() = 0;
+				return false;
+			}
+			if (zhichu == '') {
+				alert('支出如果不填写会默认为 0');
+				$('#zhichu').val() = 0;
+				return false;
+			}
+			$.ajax({
+				url : '../sob/add',
+				type : 'post',
+				/* dataType:'json', */
+				data : {
+					/* startTime:$('#startTime').val(),
+					endTime:$('#endTime').val(), */
+					shouru : $('#shouru').val(),
+					zhichu : $('#zhichu').val(),
+					yusuan : $('#yusuan').val(),
+					neirong : $('#neirong').val()
+				},
+				success : function(data) {
+					localStorage.clear();
+					location.href = 'statementOfBill.jsp';
+				},
+				error : function() {
+					/* alert("添加失败");
+					location.href = 'statementOfBill.jsp'; */
+				}
+			});
+		});
+	});
+</script>
+<form>
+	<!-- <div>
+		<label>开始时间:</label> <input type="text" class="easyui-datebox"
+			editable="false" id="startTime" /> &emsp;&emsp;<label>结束时间:</label>
+		<input type="text" class="easyui-datebox" editable="false"
+			id="endTime" />
+	</div> -->
+	<div>
+		<br /> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <label>收入:</label> <input
+			class="easyui-textbox" type="text" id="shouru" />
+	</div>
+	<div>
+		<br />&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<label>支出:</label> <input
+			class="easyui-textbox" type="text" id="zhichu" />
+	</div>
+	<div>
+		<br /> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<label>预算:</label> <input
+			class="easyui-textbox" type="text" name="name" id="yusuan" />
+	</div>
+	<div>
+		<br /> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<label>备注:</label><br />
+		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+		<textarea style="height: 100px; width: 250px" id="neirong"></textarea>
+		<!-- <input
+			style="height: 100px; width: 250px; padding: 20px; margin: 20px; font-size: 36px;"
+			class="easyui-textbox" type="text" id="neirong" /> -->
+
+	</div>
+	<div>
+		<br />
+		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+		<input type="submit" value="提交" id="submit" style="">
+	</div>
+</form>
+

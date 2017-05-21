@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xgj.mcj.dao.UserMapper">
+	<resultMap id="BaseResultMap" type="xgj.mcj.entity.User">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="created" property="created" jdbcType="TIMESTAMP" />
+		<result column="modified" property="modified" jdbcType="TIMESTAMP" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="tel" property="tel" jdbcType="VARCHAR" />
+		<result column="cname" property="cname" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="company_id" property="companyId" jdbcType="INTEGER" />
+	</resultMap>
+
+	<resultMap type="xgj.mcj.entity.User" id="RoleResultMap">
+		<id property="id" column="id" />
+		<association property="role" column="id" select="getRole" />
+	</resultMap>
+	
+	
+	<sql id="sql_count">
+        SELECT COUNT(*)
+    </sql>
+    <sql id="sql_select">
+        SELECT *
+    </sql>
+    <sql id="sql_where">
+        FROM USER
+    </sql>
+	
+	<select id="selectUserListWithPage" parameterType="xgj.mcj.entity.PageModel" resultType="xgj.mcj.entity.User">
+        <include refid="sql_select"></include>
+        <include refid="sql_where"></include>
+        <if test="pageNumber != null and  pageSize!= null">
+            limit #{startRow},#{pageSize}
+        </if>
+    </select>
+ 
+    <select id="selectUserCountWithPage" parameterType="xgj.mcj.entity.PageModel" resultType="Integer">
+        <include refid="sql_count"></include>
+        <include refid="sql_where"></include>
+    </select>
+
+	<select id="login" resultMap="BaseResultMap" parameterType="xgj.mcj.entity.User">
+		select * from user
+		where username = #{username,jdbcType=VARCHAR} and password =
+		#{password,jdbcType=VARCHAR}
+	</select>
+
+	<select id="all" resultMap="BaseResultMap">
+		select * from user
+	</select>
+
+	<select id="selectUserId" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select * from user where id=#{id,jdbcType=INTEGER}
+	</select>
+	<select id="getRole" resultMap="BaseResultMap" resultType="xgj.mcj.entity.Role">
+		SELECT * FROM role a ,userrole b where a.id = b.role_id and b.user_id =# {id,jdbcType=INTEGER}
+	</select>
+
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from user
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<insert id="add" parameterType="xgj.mcj.entity.User">
+		insert into user (username, password, address,tel, email)
+		values
+		(#{username,jdbcType=VARCHAR},
+		 #{password,jdbcType=VARCHAR},
+	     #{address,jdbcType=VARCHAR},
+		 #{tel,jdbcType=VARCHAR}, 
+		 #{email,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	
+	
+	<update id="updateByPrimaryKey" parameterType="xgj.mcj.entity.User">
+		update user
+		set
+		created = #{created,jdbcType=TIMESTAMP},
+		modified =
+		#{modified,jdbcType=TIMESTAMP},
+		username =
+		#{username,jdbcType=VARCHAR},
+		password = #{password,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		tel = #{tel,jdbcType=VARCHAR},
+		cname = #{cname,jdbcType=VARCHAR},
+		company_id =
+		#{companyId,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

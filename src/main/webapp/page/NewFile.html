@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html ; charset=utf-8">
+<script type="text/javascript" src="../js/jquery-easyui-1.5.2/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/jquery-easyui-1.5.2/jquery.easyui.min.js" charset="utf-8"></script>
+<link rel="stylesheet" href="../js/jquery-easyui-1.5.2/themes/default/easyui.css" type="text/css"></link>
+<link rel="stylesheet" href="../js/jquery-easyui-1.5.2/themes/icon.css" type="text/css"></link>
+<script type="text/javascript" src="../js/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+	
+	<script type="text/javascript">
+	$(function(){  
+		$.messager.confirm('确认','您确认想要删除记录吗？',function(r){    
+		    if (r){    
+		        alert('确认删除');    
+		    }    
+		}); 
+	});
+	 
+
+
+	</script>
+</head>
+<body class="easyui-layout">   
+    <div data-options="region:'north',title:'North Title',split:true" style="height:100px;"></div>   
+    <div data-options="region:'south',title:'South Title',split:true" style="height:100px;"></div>   
+    <div data-options="region:'east',iconCls:'icon-reload',title:'East',split:true" style="width:100px;"></div>   
+    <div data-options="region:'west',title:'West',split:true" style="width:100px;"></div>   
+    <div data-options="region:'center',title:'center title'" style="padding:5px;background:#eee;"></div>   
+</body>  
+</html>
